@@ -2,10 +2,10 @@
 
 import itertools
 
-letters = "0123456789+-*/="
-
 ops = "+-*/"
 eq = "="
+
+digit1w0 = range(0,10)
 
 digit1 = range(1, 10)
 digit2 = range(10, 100)
@@ -71,26 +71,22 @@ def filter2(components):
 equations1 = combine(digit1, ops, digit1, eq, digit4) \
            + combine(digit1, ops, digit2, eq, digit3) \
            + combine(digit1, ops, digit3, eq, digit2) \
-           + combine(digit1, ops, digit4, eq, digit1) \
+           + combine(digit1, ops, digit4, eq, digit1w0) \
            + combine(digit2, ops, digit1, eq, digit3) \
            + combine(digit2, ops, digit2, eq, digit2) \
-           + combine(digit2, ops, digit3, eq, digit1) \
+           + combine(digit2, ops, digit3, eq, digit1w0) \
            + combine(digit3, ops, digit1, eq, digit2) \
-           + combine(digit3, ops, digit2, eq, digit1) \
-           + combine(digit4, ops, digit1, eq, digit1)
+           + combine(digit3, ops, digit2, eq, digit1w0) \
+           + combine(digit4, ops, digit1, eq, digit1w0)
 
 equations2 = combine(digit1, ops, digit1, ops, digit1, eq, digit2) \
-           + combine(digit1, ops, digit1, ops, digit2, eq, digit1) \
-           + combine(digit1, ops, digit2, ops, digit1, eq, digit1) \
-           + combine(digit2, ops, digit1, ops, digit1, eq, digit1)
+           + combine(digit1, ops, digit1, ops, digit2, eq, digit1w0) \
+           + combine(digit1, ops, digit2, ops, digit1, eq, digit1w0) \
+           + combine(digit2, ops, digit1, ops, digit1, eq, digit1w0)
 
 equations1 = list(filter(filter1, equations1))
 equations2 = list(filter(filter2, equations2))
 
-for e in equations1:
+for e in (equations1 + equations2):
 	s = [str(x) for x in e]
 	print("".join(s))
-
-for e in equations2:
-        s = [str(x) for x in e]
-        print("".join(s))
